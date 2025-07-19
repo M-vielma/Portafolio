@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miguel Vielma</title>
+    <link rel="icon" type="image/png" href="images/cubo.png">
+    <link rel="shortcut icon" href="images/cubo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header/Navegación -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <img src="images/cubo.png" alt="Miguel Vielma Logo" class="nav__logo-image">
+            </div>
+            <ul class="nav__menu">
+                <li><a href="#inicio" class="nav__link">Inicio</a></li>
+                <li><a href="#sobre-mi" class="nav__link">Sobre mí</a></li>
+                <li><a href="#habilidades" class="nav__link">Habilidades</a></li>
+                <li><a href="#proyectos" class="nav__link">Proyectos</a></li>
+                <li><a href="#experiencia" class="nav__link">Experiencia</a></li>
+                <li><a href="#contacto" class="nav__link nav__link--cta">Contacto</a></li>
+            </ul>
+            <label class="switch" style="margin-left:1.5rem;">
+                <input checked="true" id="checkbox" type="checkbox" />
+                <span class="slider">
+                    <div class="star star_1"></div>
+                    <div class="star star_2"></div>
+                    <div class="star star_3"></div>
+                    <svg viewBox="0 0 16 16" class="cloud_1 cloud">
+                        <path
+                            transform="matrix(.77976 0 0 .78395-299.99-418.63)"
+                            fill="#fff"
+                            d="m391.84 540.91c-.421-.329-.949-.524-1.523-.524-1.351 0-2.451 1.084-2.485 2.435-1.395.526-2.388 1.88-2.388 3.466 0 1.874 1.385 3.423 3.182 3.667v.034h12.73v-.006c1.775-.104 3.182-1.584 3.182-3.395 0-1.747-1.309-3.186-2.994-3.379.007-.106.011-.214.011-.322 0-2.707-2.271-4.901-5.072-4.901-2.073 0-3.856 1.202-4.643 2.925"
+                        ></path>
+                    </svg>
+                </span>
+            </label>
+            <div class="nav__toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="cube-loader">
+            <div class="cube-top"></div>
+            <div class="cube-wrapper">
+                <span style="--i:0" class="cube-span"></span>
+                <span style="--i:1" class="cube-span"></span>
+                <span style="--i:2" class="cube-span"></span>
+                <span style="--i:3" class="cube-span"></span>
+            </div>
+        </div>
+        <div class="hero__container">
+            <div class="hero__content">
+                <h1 class="hero__title">
+                    <span class="hero__name">Miguel Vielma</span>
+                    <span class="hero__role">Desarrollador Full Stack</span>
+                </h1>
+                <p class="hero__description">
+                    Construyo soluciones digitales escalables para empresas y personas.
+                </p>
+                <div class="hero__buttons">
+                    <a href="#proyectos" class="btn btn--primary">Ver portafolio</a>
+                    <a href="#contacto" class="btn btn--secondary">Contactar</a>
+                </div>
+            </div>
+            <div class="hero__visual">
+                <div class="hero__code-animation">
+                    <div class="code-line">
+                        <span class="code-keyword">const</span> 
+                        <span class="code-variable">developer</span> = {
+                    </div>
+                    <div class="code-line">
+                        <span class="code-property">name:</span> 
+                        <span class="code-string">'Miguel Vielma'</span>,
+                    </div>
+                    <div class="code-line">
+                        <span class="code-property">role:</span> 
+                        <span class="code-string">'Full Stack Developer'</span>,
+                    </div>
+                    <div class="code-line">
+                        <span class="code-property">passion:</span> 
+                        <span class="code-string">'Building digital solutions'</span>
+                    </div>
+                    <div class="code-line">};</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero__scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Sobre mí Section -->
+    <section id="sobre-mi" class="about">
+        <div class="container">
+            <h2 class="section-title">Sobre mí</h2>
+            <div class="about__content">
+                <div class="about__main">
+                    <div class="about__profile">
+                        <div class="about__photo-container">
+                            <div class="about__photo">
+                                <img src="images/profile-photo.jpg" alt="Miguel Vielma - Desarrollador Full Stack" class="about__image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="about__photo-placeholder">
+                                    <div class="about__photo-initials">MV</div>
+                                    <div class="about__photo-text">Miguel Vielma</div>
+                                </div>
+                                <div class="about__photo-overlay">
+                                    <div class="about__photo-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="about__photo-decoration"></div>
+                        </div>
+                        <div class="about__quick-info">
+                            <div class="about__info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Chile</span>
+                            </div>
+                            <div class="about__info-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Disponible para proyectos</span>
+                            </div>
+                            <div class="about__info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Respuesta en 24h</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about__text">
+                        <p class="about__description">
+                            Soy desarrollador Full Stack con experiencia creando aplicaciones web y móviles, 
+                            integrando frontend, backend y bases de datos. He trabajado en proyectos independientes 
+                            para clientes del sector retail, eventos y gestión interna, aplicando tecnologías 
+                            modernas como React Native, Node.js, Supabase, SQL y Flutter.
+                        </p>
+                        <p class="about__description">
+                            Me apasiona resolver problemas reales mediante software eficiente, y busco desafíos 
+                            que me permitan seguir creciendo y aportando valor.
+                        </p>
+                        <div class="about__cta">
+                            <a href="#contacto" class="btn btn--primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Contáctame
+                            </a>
+                            <a href="CV-Miguel-Vielma.pdf" class="btn btn--secondary" download>
+                                <i class="fas fa-download"></i>
+                                Descargar CV
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="about__stats">
+                    <div class="stat">
+                        <span class="stat__number">3+</span>
+                        <span class="stat__label">Años de experiencia</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">15+</span>
+                        <span class="stat__label">Proyectos completados</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">5+</span>
+                        <span class="stat__label">Tecnologías dominadas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Habilidades Section -->
+    <section id="habilidades" class="skills">
+        <div class="container">
+            <h2 class="section-title">Habilidades Técnicas</h2>
+            <div class="skills-carousel-container" style="position: relative; margin-top: 2.5rem; margin-bottom: 2.5rem;">
+                <button class="skills-nav-btn skills-nav-btn--prev" aria-label="Anterior" style="position: absolute; left: -60px; top: 50%; transform: translateY(-50%); z-index: 10; width: 48px; height: 48px; border: none; border-radius: 50%; background: var(--card-bg); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.07); transition: all 0.3s ease; border: 1.5px solid var(--border);">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="skills-carousel" style="display: flex; gap: 2rem; overflow: hidden; position: relative;">
+                    <div class="skills-carousel-track" style="display: flex; gap: 2rem; transition: transform 0.3s ease;">
+                    <div class="skill-card skill-card-simple">
+                        <div class="skill-card__icon"><i class="fas fa-code"></i></div>
+                        <h3 class="skill-card__title">Lenguajes</h3>
+                        <ul class="skill-card__list">
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>JavaScript</li>
+                            <li>Python</li>
+                            <li>Java</li>
+                            <li>Dart</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card skill-card-simple">
+                        <div class="skill-card__icon"><i class="fas fa-layer-group"></i></div>
+                        <h3 class="skill-card__title">Frameworks / Librerías</h3>
+                        <ul class="skill-card__list">
+                            <li>React</li>
+                            <li>React Native</li>
+                            <li>Node.js</li>
+                            <li>Flutter</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card skill-card-simple">
+                        <div class="skill-card__icon"><i class="fas fa-database"></i></div>
+                        <h3 class="skill-card__title">Backend / BBDD</h3>
+                        <ul class="skill-card__list">
+                            <li>Firebase</li>
+                            <li>Supabase</li>
+                            <li>Google Sheets API</li>
+                            <li>SQL Server</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card skill-card-simple">
+                        <div class="skill-card__icon"><i class="fas fa-tools"></i></div>
+                        <h3 class="skill-card__title">Herramientas</h3>
+                        <ul class="skill-card__list">
+                            <li>Git</li>
+                            <li>VSCode</li>
+                            <li>Render</li>
+                            <li>GitHub</li>
+                            <li>Figma</li>
+                            <li>Postman</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card skill-card-simple">
+                        <div class="skill-card__icon"><i class="fas fa-microchip"></i></div>
+                        <h3 class="skill-card__title">Otras</h3>
+                        <ul class="skill-card__list">
+                            <li>NFC</li>
+                            <li>APIs REST</li>
+                            <li>Automatización</li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                <button class="skills-nav-btn skills-nav-btn--next" aria-label="Siguiente" style="position: absolute; right: -60px; top: 50%; transform: translateY(-50%); z-index: 10; width: 48px; height: 48px; border: none; border-radius: 50%; background: var(--card-bg); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.07); transition: all 0.3s ease; border: 1.5px solid var(--border);">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <!-- Indicadores de deslizamiento modernos -->
+                <div class="swipe-hint">
+                    <div class="swipe-hint__dots">
+                        <span class="swipe-dot"></span>
+                        <span class="swipe-dot"></span>
+                        <span class="swipe-dot"></span>
+                    </div>
+                    <div class="swipe-hint__text">
+                        <svg class="swipe-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 5L15 12L8 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Desliza para ver más</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyectos Section -->
+    <section class="palette-section" style="margin-bottom: 2.5rem;">
+        <div class="palette-title" style="text-align:center; margin-bottom: 1.2rem; font-size:1.15rem; font-weight:500; color:var(--text);">
+        </div>
+        <div class="palette-title" style="text-align:center; margin-bottom: 1.2rem; font-size:1.15rem; font-weight:500; color:var(--text);">
+        </div>
+      <div class="palette-title palette-title-destacada" style="text-align:center; margin-bottom: 1.2rem; font-weight:500; color:var(--text);">
+        Te acompaño en cada paso para construir algo que realmente sea tuyo con soluciones hechas a medida.
+      </div>
+      <div class="palette-title" style="text-align:center; margin-bottom: 1.2rem; font-size:1.15rem; font-weight:500; color:var(--text);">
+      </div>
+      <div class="container-items">
+        <button class="item-color" style="--color: #e11d48" aria-color="#e11d48" aria-label="Pasión"></button>
+        <button class="item-color" style="--color: #f472b6" aria-color="#f472b6" aria-label="Creatividad"></button>
+        <button class="item-color" style="--color: #fb923c" aria-color="#fb923c" aria-label="Energía"></button>
+        <button class="item-color" style="--color: #facc15" aria-color="#facc15" aria-label="Optimismo"></button>
+        <button class="item-color" style="--color: #84cc16" aria-color="#84cc16" aria-label="Crecimiento"></button>
+        <button class="item-color" style="--color: #10b981" aria-color="#10b981" aria-label="Confianza"></button>
+        <button class="item-color" style="--color: #0ea5e9" aria-color="#0ea5e9" aria-label="Innovación"></button>
+        <button class="item-color" style="--color: #3b82f6" aria-color="#3b82f6" aria-label="Profesionalismo"></button>
+        <button class="item-color" style="--color: #8b5cf6" aria-color="#8b5cf6" aria-label="Imaginación"></button>
+        <button class="item-color" style="--color: #a78bfa" aria-color="#a78bfa" aria-label="Inspiración"></button>
+      </div>
+      <div class="palette-title" style="text-align:center; margin-bottom: 1.2rem; font-size:1.15rem; font-weight:500; color:var(--text);">
+    </div>
+    <div class="palette-title" style="text-align:center; margin-bottom: 1.2rem; font-size:1.15rem; font-weight:500; color:var(--text);">
+    </div>
+    <div class="palette-title" style="text-align:center; margin-bottom: 1.2rem; font-size:1.15rem; font-weight:500; color:var(--text);">
+    </div>
+
+    </section>
+    <section id="proyectos" class="projects">
+        <div class="container">
+            <h2 class="section-title">Proyectos Destacados</h2>
+            <div class="projects__grid">
+                <article class="project-card" data-project="nfc-retail">
+                    <div class="project-card__header">
+                        <h3 class="project-card__title">Sistema NFC para control de inventario en retail</h3>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Google Sheets</span>
+                        </div>
+                    </div>
+                    <p class="project-card__description">
+                        Permite registrar y rastrear movimientos de mercadería en tiempo real mediante tecnología NFC, optimizando la gestión de inventario en tiendas y bodegas.
+                    </p>
+                    <div class="project-card__links">
+                        <a href="demo-nfc-retail.html" class="project-link" target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt"></i>
+                            Ver demo
+                        </a>
+                        <a href="#" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Código
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project="form-invitaciones">
+                    <div class="project-card__header">
+                        <h3 class="project-card__title">Formulario de invitaciones con código JS + backend</h3>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Google Sheets</span>
+                        </div>
+                    </div>
+                    <p class="project-card__description">
+                        Facilita la confirmación de asistencia a eventos, validando códigos únicos y mostrando mensajes personalizados para cada invitado.
+                    </p>
+                    <div class="project-card__links">
+                        <a href="demo-form-invitaciones.html" class="project-link" target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt"></i>
+                            Ver demo
+                        </a>
+                        <a href="#" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Código
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project="mecapp">
+                    <div class="project-card__header">
+                        <h3 class="project-card__title">MecApp: plataforma de gestión automotriz</h3>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">Flutter</span>
+                            <span class="tech-tag">Supabase</span>
+                            <span class="tech-tag">SQL</span>
+                        </div>
+                    </div>
+                    <p class="project-card__description">
+                        Plataforma para administrar la compra, venta y control de vehículos, permitiendo gestionar inventario, usuarios y búsquedas por patente o RUT.
+                    </p>
+                    <div class="project-card__links">
+                        <a href="demo-mecapp.html" class="project-link" target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt"></i>
+                            Ver demo
+                        </a>
+                        <a href="#" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Código
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project="login-system">
+                    <div class="project-card__header">
+                        <h3 class="project-card__title">Sistema de Login con validación</h3>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+                    <p class="project-card__description">
+                        Permite a los usuarios acceder de forma segura a una plataforma, mostrando mensajes de validación y adaptándose a cualquier dispositivo.
+                    </p>
+                    <div class="project-card__links">
+                        <a href="demo-login.html" class="project-link" target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt"></i>
+                            Ver demo
+                        </a>
+                        <a href="#" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Código
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card" data-project="dashboard-metricas">
+                    <div class="project-card__header">
+                        <h3 class="project-card__title">Dashboard de métricas (proyecto personal)</h3>
+                        <div class="project-card__tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">APIs REST</span>
+                            <span class="tech-tag">Chart.js</span>
+                        </div>
+                    </div>
+                    <p class="project-card__description">
+                        Visualiza indicadores clave de negocio a través de gráficos y métricas, facilitando el análisis y la toma de decisiones de manera intuitiva.
+                    </p>
+                    <div class="project-card__links">
+                        <a href="demo-dashboard-metricas.html" class="project-link" target="_blank" rel="noopener">
+                            <i class="fas fa-external-link-alt"></i>
+                            Ver demo
+                        </a>
+                        <a href="#" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Código
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DE PROYECTO -->
+    <div id="project-modal" class="project-modal" aria-hidden="true">
+        <div class="project-modal__overlay"></div>
+        <div class="project-modal__content" role="dialog" aria-modal="true" tabindex="-1">
+            <button class="project-modal__close" aria-label="Cerrar">&times;</button>
+            <div class="project-modal__body">
+                <!-- Aquí se inyecta el contenido dinámico del proyecto -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Experiencia Section -->
+    <section id="experiencia" class="experience">
+        <div class="container">
+            <h2 class="section-title">Experiencia</h2>
+            <div class="timeline">
+                <div class="timeline__item">
+                    <div class="timeline__content">
+                        <div class="timeline__header">
+                            <h3 class="timeline__title">Analista de Pérdidas</h3>
+                            <span class="timeline__period">Feb 2024 – Jun 2025</span>
+                        </div>
+                        <div class="timeline__company">Cencosud | Santiago de Chile, Santiago, Chile</div>
+                        <p class="timeline__description">
+                            Como analista de pérdidas, realicé auditorías para identificar desviaciones en procesos operativos y administrativos, detectando irregularidades e implementando mejoras para reducir pérdidas. Analicé inventarios, cierres de ventas y operaciones en terreno, generando informes con hallazgos y recomendaciones. Además, recibí reconocimientos por brindar atención destacada al cliente, contribuyendo a mejorar la eficiencia operativa y fortalecer la confianza en la empresa.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline__item">
+                    <div class="timeline__content">
+                        <div class="timeline__header">
+                            <h3 class="timeline__title">Desarrollador de Aplicaciones</h3>
+                            <span class="timeline__period">– Jun 2025</span>
+                        </div>
+                        <div class="timeline__company">FreeLancer | Santiago de Chile, Santiago, Chile</div>
+                        <p class="timeline__description">
+                            Como desarrollador de aplicaciones, diseñé y programé un formulario web interactivo para confirmación de asistencia a boda, utilizando JavaScript para el frontend y desarrollando un backend con Node.js. Implementé la integración con Excel como base de datos para registrar respuestas en tiempo real y desplegué la aplicación en Render para acceso online. Además, desarrollé un sistema de notificaciones automáticas por correo electrónico para informar a los novios cada vez que un invitado confirmaba asistencia, asegurando una experiencia fluida, organizada y segura para los usuarios.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline__item">
+                    <div class="timeline__content">
+                        <div class="timeline__header">
+                            <h3 class="timeline__title">Desarrollador Web</h3>
+                            <span class="timeline__period">Mar 2021 – Ene 2024</span>
+                        </div>
+                        <div class="timeline__company">JyR Autos | Santiago de Chile, Santiago, Chile</div>
+                        <p class="timeline__description">
+                            Desarrollé e implementé soluciones web para optimizar los procesos de compra y venta de vehículos usados. Implementé sistemas para la gestión de inventario, control de cierres de negocio y generación de métricas automáticas. Además, integré análisis de datos con Power BI para el seguimiento de métricas clave, mejorando la eficiencia operativa, la experiencia del usuario y el posicionamiento digital del negocio automotriz.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="contact__content">
+                <div class="contact__info">
+                    <p class="contact__description">
+                        ¿Tienes un proyecto en mente? Me encantaría escuchar sobre él. 
+                        Estoy siempre abierto a nuevas oportunidades y colaboraciones.
+                    </p>
+                    <div class="contact__links">
+                        <a href="mailto:vielmamiguel.dev@gmail.com" class="contact__link">
+                            <i class="fas fa-envelope"></i>
+                            <span>vielmamiguel.dev@gmail.com</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/j-miguel-vielma-53a42a1a7/" target="_blank" class="contact__link">
+                            <i class="fab fa-linkedin"></i>
+                            <span>linkedin.com/in/j-miguel-vielma-53a42a1a7</span>
+                        </a>
+                        <a href="https://github.com/M-vielma" target="_blank" class="contact__link">
+                            <i class="fab fa-github"></i>
+                            <span>github.com/M-vielma</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact__form">
+                    <form class="form">
+                        <div class="form__group">
+                            <input type="text" id="name" name="name" class="form__input" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form__group">
+                            <input type="email" id="email" name="email" class="form__input" placeholder="Tu email" required>
+                        </div>
+                        <div class="form__group">
+                            <textarea id="message" name="message" class="form__textarea" placeholder="Tu mensaje" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary">Enviar mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <p>&copy; 2024 Miguel Vielma. Todos los derechos reservados.</p>
+                <div class="footer__social">
+                    <a href="https://github.com/M-vielma" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/j-miguel-vielma-53a42a1a7/" target="_blank" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

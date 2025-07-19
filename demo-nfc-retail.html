@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Sistema NFC Retail</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .nfc-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nfc-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .nfc-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .nfc-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .nfc-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .search-section {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .demo-hint {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #667eea;
+        }
+
+        .scan-button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .scan-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .scan-button:active {
+            transform: translateY(0);
+        }
+
+        .inventory-button {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .inventory-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .inventory-button:active {
+            transform: translateY(0);
+        }
+
+        .status-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 500;
+            text-align: center;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-scanning {
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .inventory-section {
+            margin-top: 2rem;
+        }
+
+        .inventory-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .product-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .product-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-sku {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .product-stock {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .nfc-container {
+                padding: 1.5rem;
+                margin: 10px;
+            }
+            
+            .nfc-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nfc-container">
+        <div class="nfc-header">
+            <div class="nfc-icon">📱</div>
+            <h1 class="nfc-title">Sistema de Gestión de Inventario</h1>
+            <p class="nfc-subtitle">Busca productos y consulta stock en tiempo real</p>
+        </div>
+
+        <div class="search-section">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Buscar producto por SKU o nombre..."
+                maxlength="50"
+            >
+            
+            <div class="demo-hint">
+                💡 <strong>Demo:</strong> Haz doble clic en el campo para auto-completar un SKU de prueba
+            </div>
+        </div>
+
+        <button class="scan-button" onclick="buscarProducto()">
+            🔍 Buscar Producto
+        </button>
+
+        <button class="inventory-button" onclick="mostrarInventario()">
+            📊 Ver Inventario Completo
+        </button>
+
+        <div id="statusMessage" class="status-message hidden"></div>
+
+        <div class="inventory-section hidden" id="inventorySection">
+            <h3 class="inventory-title">Inventario Actual</h3>
+            <div class="product-list" id="productList">
+                <!-- Los productos se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de productos
+        const productos = [
+            { sku: "SKU001", nombre: "Nike Air Max 270", stock: 15 },
+            { sku: "SKU002", nombre: "Adidas Ultraboost 21", stock: 8 },
+            { sku: "SKU003", nombre: "Puma RS-X", stock: 12 },
+            { sku: "SKU004", nombre: "New Balance 574", stock: 20 },
+            { sku: "SKU005", nombre: "Converse Chuck Taylor", stock: 25 },
+            { sku: "SKU006", nombre: "Vans Old Skool", stock: 18 },
+            { sku: "SKU007", nombre: "Reebok Classic", stock: 10 },
+            { sku: "SKU008", nombre: "ASICS Gel-Kayano", stock: 7 },
+            { sku: "SKU009", nombre: "Saucony Ride", stock: 14 },
+            { sku: "SKU010", nombre: "Brooks Ghost", stock: 9 }
+        ];
+
+        let productosFiltrados = [...productos];
+
+        // Función para mostrar productos
+        function mostrarProductos(productosAMostrar = productos) {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            productosAMostrar.forEach(producto => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-name">${producto.nombre}</div>
+                        <div class="product-sku">SKU: ${producto.sku}</div>
+                    </div>
+                    <div class="product-stock">${producto.stock}</div>
+                `;
+                productList.appendChild(productItem);
+            });
+        }
+
+        // Función para buscar por SKU
+        function buscarPorSKU(sku) {
+            const skuUpper = sku.toUpperCase();
+            productosFiltrados = productos.filter(producto => 
+                producto.sku.includes(skuUpper) || 
+                producto.nombre.toLowerCase().includes(sku.toLowerCase())
+            );
+            mostrarProductos(productosFiltrados);
+        }
+
+        // Función para buscar producto
+        function buscarProducto() {
+            const searchInput = document.getElementById('searchInput');
+            const busqueda = searchInput.value.trim();
+            
+            if (!busqueda) {
+                mostrarStatus('Por favor ingresa un SKU o nombre de producto para buscar', 'error');
+                return;
+            }
+
+            const producto = productos.find(p => 
+                p.sku.toUpperCase() === busqueda.toUpperCase() || 
+                p.nombre.toLowerCase().includes(busqueda.toLowerCase())
+            );
+            
+            if (!producto) {
+                mostrarStatus('Producto no encontrado. Verifica el SKU o nombre.', 'error');
+                return;
+            }
+
+            // Mostrar resultado de búsqueda
+            mostrarStatus(`✅ Producto encontrado: ${producto.nombre} (SKU: ${producto.sku})`, 'success');
+            
+            // Mostrar solo el producto encontrado
+            mostrarProductos([producto]);
+            document.getElementById('inventorySection').classList.remove('hidden');
+            
+            setTimeout(() => {
+                ocultarStatus();
+            }, 3000);
+        }
+
+        // Función para mostrar inventario completo
+        function mostrarInventario() {
+            document.getElementById('inventorySection').classList.remove('hidden');
+            mostrarProductos(productos);
+            mostrarStatus('📊 Inventario completo cargado', 'success');
+            
+            setTimeout(() => {
+                ocultarStatus();
+            }, 2000);
+        }
+
+        // Función para mostrar mensajes de estado
+        function mostrarStatus(mensaje, tipo) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = mensaje;
+            statusMessage.className = `status-message status-${tipo}`;
+            statusMessage.classList.remove('hidden');
+        }
+
+        // Función para ocultar mensajes de estado
+        function ocultarStatus() {
+            document.getElementById('statusMessage').classList.add('hidden');
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const busqueda = e.target.value.trim();
+            if (busqueda) {
+                buscarPorSKU(busqueda);
+            } else {
+                productosFiltrados = [...productos];
+                // No mostrar productos automáticamente, solo cuando se busque o vea inventario
+            }
+        });
+
+        // Auto-completar SKU al hacer doble clic
+        document.getElementById('searchInput').addEventListener('dblclick', function() {
+            const skus = productos.map(p => p.sku);
+            const skuAleatorio = skus[Math.floor(Math.random() * skus.length)];
+            this.value = skuAleatorio;
+        });
+
+        // Permitir Enter para buscar
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarProducto();
+            }
+        });
+    </script>
+</body>
+</html> 

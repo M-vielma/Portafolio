@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Métricas - Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f4f6fa;
+            --card-bg: #fff;
+            --text: #222;
+            --text-light: #666;
+            --border: #e5e7eb;
+        }
+        [data-theme="dark"] {
+            --primary: #60a5fa;
+            --bg: #181a20;
+            --card-bg: #23262f;
+            --text: #f3f4f6;
+            --text-light: #a1a1aa;
+            --border: #313442;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+        .dashboard-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem 3rem 1rem;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .dashboard-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.4rem 1.2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s, color 0.3s;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: background 0.3s, color 0.3s;
+        }
+        .metric-title {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        .metric-trend {
+            font-size: 0.95rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .chart-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: background 0.3s, color 0.3s;
+        }
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 900px) {
+            .charts {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .dashboard-title {
+                font-size: 1.3rem;
+            }
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="dashboard-title">Dashboard de Métricas</div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                <span id="themeIcon">🌙</span> <span id="themeText">Modo oscuro</span>
+            </button>
+        </div>
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-title">Ventas Totales</div>
+                <div class="metric-value" id="ventasTotal">$12,500</div>
+                <div class="metric-trend">▲ 8% este mes</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Usuarios Activos</div>
+                <div class="metric-value" id="usuariosActivos">1,230</div>
+                <div class="metric-trend">▲ 3% este mes</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Ingresos</div>
+                <div class="metric-value" id="ingresos">$4,200</div>
+                <div class="metric-trend">▲ 5% este mes</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Tasa de Conversión</div>
+                <div class="metric-value" id="conversion">4.7%</div>
+                <div class="metric-trend">▲ 0.4% este mes</div>
+            </div>
+        </div>
+        <div class="charts">
+            <div class="chart-card">
+                <div class="chart-title">Ventas mensuales</div>
+                <canvas id="ventasChart" height="120"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title">Usuarios activos por canal</div>
+                <canvas id="usuariosChart" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Tema claro/oscuro
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Modo claro';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Modo oscuro';
+            }
+            localStorage.setItem('dashboard-theme', theme);
+        }
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme') || 'light';
+            setTheme(current === 'light' ? 'dark' : 'light');
+        });
+        // Inicializar tema
+        const savedTheme = localStorage.getItem('dashboard-theme') || 'light';
+        setTheme(savedTheme);
+
+        // Chart.js - Ventas mensuales
+        const ventasCtx = document.getElementById('ventasChart').getContext('2d');
+        const ventasChart = new Chart(ventasCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                datasets: [{
+                    label: 'Ventas',
+                    data: [1200, 1500, 1800, 1700, 2100, 2500, 2300, 2200, 2000, 2400, 2600, 2800],
+                    borderColor: 'var(--primary)',
+                    backgroundColor: 'rgba(37,99,235,0.08)',
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 4,
+                    pointBackgroundColor: 'var(--primary)',
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: 'var(--text-light)' },
+                        grid: { color: 'var(--border)' }
+                    },
+                    x: {
+                        ticks: { color: 'var(--text-light)' },
+                        grid: { color: 'var(--border)' }
+                    }
+                }
+            }
+        });
+        // Chart.js - Usuarios activos por canal
+        const usuariosCtx = document.getElementById('usuariosChart').getContext('2d');
+        const usuariosChart = new Chart(usuariosCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Web', 'Móvil', 'API'],
+                datasets: [{
+                    label: 'Usuarios',
+                    data: [700, 400, 130],
+                    backgroundColor: [
+                        'var(--primary)',
+                        'rgba(37,99,235,0.5)',
+                        'rgba(37,99,235,0.2)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        labels: { color: 'var(--text-light)', font: { size: 14 } }
+                    }
+                }
+            }
+        });
+        // Actualizar gráficos al cambiar tema
+        const observer = new MutationObserver(() => {
+            ventasChart.options.scales.x.ticks.color = getComputedStyle(document.documentElement).getPropertyValue('--text-light');
+            ventasChart.options.scales.y.ticks.color = getComputedStyle(document.documentElement).getPropertyValue('--text-light');
+            ventasChart.options.scales.x.grid.color = getComputedStyle(document.documentElement).getPropertyValue('--border');
+            ventasChart.options.scales.y.grid.color = getComputedStyle(document.documentElement).getPropertyValue('--border');
+            ventasChart.data.datasets[0].borderColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+            ventasChart.data.datasets[0].pointBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+            ventasChart.update();
+            usuariosChart.data.datasets[0].backgroundColor = [
+                getComputedStyle(document.documentElement).getPropertyValue('--primary'),
+                'rgba(37,99,235,0.5)',
+                'rgba(37,99,235,0.2)'
+            ];
+            usuariosChart.options.plugins.legend.labels.color = getComputedStyle(document.documentElement).getPropertyValue('--text-light');
+            usuariosChart.update();
+        });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo - Sistema de Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .demo-login-container { 
+      max-width: 400px; 
+      width: 90%;
+      background: #fff; 
+      border-radius: 1.5rem; 
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15); 
+      padding: 2.5rem; 
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .demo-login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    
+    .demo-login-logo {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .demo-login-title {
+      color: #1f2937;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .demo-login-subtitle {
+      color: #6b7280;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .demo-login-form {
+      text-align: left;
+    }
+    
+    .demo-login-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .demo-login-label {
+      display: block;
+      color: #374151;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .demo-login-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      transition: all 0.2s;
+      box-sizing: border-box;
+    }
+    
+    .demo-login-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .demo-login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff; 
+      border: none; 
+      border-radius: 0.75rem; 
+      padding: 0.875rem 1.5rem; 
+      font-size: 1rem; 
+      font-weight: 600; 
+      margin: 1rem 0; 
+      cursor: pointer; 
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .demo-login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+    
+    .demo-login-btn:active {
+      transform: translateY(0);
+    }
+    
+    .demo-login-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .demo-login-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    
+    .demo-login-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #6b7280;
+    }
+    
+    .demo-login-checkbox input {
+      width: 16px;
+      height: 16px;
+      accent-color: #667eea;
+    }
+    
+    .demo-login-forgot {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .demo-login-forgot:hover {
+      text-decoration: underline;
+    }
+    
+    .demo-login-divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+    
+    .demo-login-divider::before,
+    .demo-login-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+    
+    .demo-login-divider span {
+      padding: 0 1rem;
+    }
+    
+    .demo-login-social {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .demo-login-social-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.75rem;
+      background: #fff;
+      color: #374151;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .demo-login-social-btn:hover {
+      border-color: #667eea;
+      background: #f8fafc;
+    }
+    
+    .demo-login-signup {
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+    
+    .demo-login-signup a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .demo-login-signup a:hover {
+      text-decoration: underline;
+    }
+    
+    .demo-login-status {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      min-height: 1.5em;
+      display: none;
+    }
+    
+    .demo-login-status.success {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      display: block;
+    }
+    
+    .demo-login-status.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      display: block;
+    }
+    
+    .demo-login-loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 0.5rem;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .demo-login-demo-info {
+      background: #f3f4f6;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #6b7280;
+      text-align: left;
+    }
+    
+    .demo-login-demo-info h4 {
+      color: #374151;
+      margin: 0 0 0.5rem 0;
+      font-size: 0.9rem;
+    }
+    
+    .demo-login-demo-info ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    
+    .demo-login-demo-info li {
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-login-container">
+    <div class="demo-login-logo">MV</div>
+    <h2 class="demo-login-title">Bienvenido de vuelta</h2>
+    <p class="demo-login-subtitle">Inicia sesión en tu cuenta</p>
+    
+    <form class="demo-login-form" id="loginForm">
+      <div class="demo-login-group">
+        <label class="demo-login-label" for="email">Correo electrónico</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="demo-login-input" 
+          placeholder="tu@email.com"
+          required
+        >
+      </div>
+      
+      <div class="demo-login-group">
+        <label class="demo-login-label" for="password">Contraseña</label>
+        <input 
+          type="password" 
+          id="password" 
+          class="demo-login-input" 
+          placeholder="••••••••"
+          required
+        >
+      </div>
+      
+      <div class="demo-login-options">
+        <label class="demo-login-checkbox">
+          <input type="checkbox" id="remember">
+          <span>Recordarme</span>
+        </label>
+        <a href="#" class="demo-login-forgot">¿Olvidaste tu contraseña?</a>
+      </div>
+      
+      <button type="submit" class="demo-login-btn" id="loginBtn">
+        <span class="btn-text">Iniciar sesión</span>
+        <span class="btn-loading" style="display: none;">
+          <span class="demo-login-loading"></span>
+          Iniciando...
+        </span>
+      </button>
+    </form>
+    
+    <div class="demo-login-status" id="loginStatus"></div>
+    
+    <div class="demo-login-divider">
+      <span>o continúa con</span>
+    </div>
+    
+    <div class="demo-login-social">
+      <button class="demo-login-social-btn" onclick="loginWithGoogle()">
+        <i class="fab fa-google"></i>
+        Google
+      </button>
+      <button class="demo-login-social-btn" onclick="loginWithGithub()">
+        <i class="fab fa-github"></i>
+        GitHub
+      </button>
+    </div>
+    
+    <div class="demo-login-signup">
+      ¿No tienes una cuenta? 
+      <a href="#" onclick="showSignup()">Regístrate aquí</a>
+    </div>
+    
+    <div class="demo-login-demo-info">
+      <h4>💡 Información del demo:</h4>
+      <ul>
+        <li>Credenciales de prueba: <strong>demo@test.com</strong> / <strong>123456</strong></li>
+        <li>Validación de campos en tiempo real</li>
+        <li>Simulación de autenticación</li>
+        <li>Diseño responsivo y accesible</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    console.log('Script de login cargado');
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginStatus = document.getElementById('loginStatus');
+    const btnText = loginBtn.querySelector('.btn-text');
+    const btnLoading = loginBtn.querySelector('.btn-loading');
+
+    // Credenciales de demo
+    const demoCredentials = {
+      email: 'demo@test.com',
+      password: '123456'
+    };
+
+    // Validación en tiempo real
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+
+    emailInput.addEventListener('input', validateEmail);
+    passwordInput.addEventListener('input', validatePassword);
+
+    function validateEmail() {
+      const email = emailInput.value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (email && !emailRegex.test(email)) {
+        emailInput.style.borderColor = '#ef4444';
+        emailInput.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+      } else {
+        emailInput.style.borderColor = email ? '#10b981' : '#e5e7eb';
+        emailInput.style.boxShadow = email ? '0 0 0 3px rgba(16, 185, 129, 0.1)' : 'none';
+      }
+    }
+
+    function validatePassword() {
+      const password = passwordInput.value;
+      
+      if (password && password.length < 6) {
+        passwordInput.style.borderColor = '#ef4444';
+        passwordInput.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+      } else {
+        passwordInput.style.borderColor = password ? '#10b981' : '#e5e7eb';
+        passwordInput.style.boxShadow = password ? '0 0 0 3px rgba(16, 185, 129, 0.1)' : 'none';
+      }
+    }
+
+    // Manejo del formulario
+    loginForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      console.log('Formulario enviado');
+      
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      
+      console.log('Email:', email);
+      console.log('Password:', password);
+      console.log('Credenciales esperadas:', demoCredentials);
+      
+      // Mostrar estado de carga
+      showLoading(true);
+      hideStatus();
+      
+      // Simular delay de red
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Validar credenciales
+      if (email === demoCredentials.email && password === demoCredentials.password) {
+        console.log('Credenciales correctas');
+        showSuccess('¡Inicio de sesión exitoso! Redirigiendo...');
+        
+        // Simular redirección
+        setTimeout(() => {
+          showSuccess('Bienvenido al dashboard');
+        }, 2000);
+      } else {
+        console.log('Credenciales incorrectas');
+        showError('Credenciales incorrectas. Usa: demo@test.com / 123456');
+      }
+      
+      showLoading(false);
+    });
+
+    function showLoading(show) {
+      loginBtn.disabled = show;
+      btnText.style.display = show ? 'none' : 'inline';
+      btnLoading.style.display = show ? 'inline-flex' : 'none';
+    }
+
+    function showSuccess(message) {
+      console.log('Mostrando éxito:', message);
+      loginStatus.textContent = message;
+      loginStatus.className = 'demo-login-status success';
+      loginStatus.style.display = 'block';
+    }
+
+    function showError(message) {
+      console.log('Mostrando error:', message);
+      loginStatus.textContent = message;
+      loginStatus.className = 'demo-login-status error';
+      loginStatus.style.display = 'block';
+    }
+
+    function hideStatus() {
+      loginStatus.style.display = 'none';
+    }
+
+    function loginWithGoogle() {
+      showLoading(true);
+      setTimeout(() => {
+        showError('Función de Google OAuth no implementada en este demo');
+        showLoading(false);
+      }, 1000);
+    }
+
+    function loginWithGithub() {
+      showLoading(true);
+      setTimeout(() => {
+        showError('Función de GitHub OAuth no implementada en este demo');
+        showLoading(false);
+      }, 1000);
+    }
+
+    function showSignup() {
+      showError('Página de registro no implementada en este demo');
+    }
+
+    // Auto-completar credenciales de demo al hacer doble clic en el logo
+    document.querySelector('.demo-login-logo').addEventListener('dblclick', function() {
+      emailInput.value = demoCredentials.email;
+      passwordInput.value = demoCredentials.password;
+      validateEmail();
+      validatePassword();
+    });
+  </script>
+</body>
+</html> 

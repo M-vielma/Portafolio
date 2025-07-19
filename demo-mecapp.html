@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo - MecApp Gestión Automotriz</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body { 
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .demo-mec-container { 
+      max-width: 500px; 
+      margin: 0 auto; 
+      background: #fff; 
+      border-radius: 1.5rem; 
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15); 
+      padding: 2.5rem; 
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .demo-mec-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    }
+    
+    .demo-mec-logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: white;
+      font-size: 2rem;
+    }
+    
+    .demo-mec-title {
+      color: #1f2937;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .demo-mec-subtitle {
+      color: #6b7280;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .demo-mec-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .demo-mec-option {
+      background: #f8fafc;
+      border: 2px solid #e5e7eb;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .demo-mec-option:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+    }
+    
+    .demo-mec-option.active {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    
+    .demo-mec-option-icon {
+      font-size: 2rem;
+      color: #3b82f6;
+      margin-bottom: 0.5rem;
+    }
+    
+    .demo-mec-option-title {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .demo-mec-option-desc {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    
+    .demo-mec-form {
+      background: #f8fafc;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    
+    .demo-mec-form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .demo-mec-label {
+      display: block;
+      color: #374151;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .demo-mec-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      transition: all 0.2s;
+      box-sizing: border-box;
+    }
+    
+    .demo-mec-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .demo-mec-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: #fff; 
+      border: none; 
+      border-radius: 0.75rem; 
+      padding: 0.875rem 1.5rem; 
+      font-size: 1rem; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: all 0.2s;
+      margin-top: 1rem;
+    }
+    
+    .demo-mec-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    }
+    
+    .demo-mec-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .demo-mec-result {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      text-align: left;
+    }
+    
+    .demo-mec-result.error {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    
+    .demo-mec-result h4 {
+      color: #065f46;
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+    
+    .demo-mec-result.error h4 {
+      color: #991b1b;
+    }
+    
+    .demo-mec-result p {
+      margin: 0.25rem 0;
+      color: #374151;
+      font-size: 0.9rem;
+    }
+    
+    .demo-mec-back {
+      background: #6b7280;
+      color: #fff;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 1rem;
+    }
+    
+    .demo-mec-back:hover {
+      background: #4b5563;
+    }
+    
+    .demo-mec-loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 0.5rem;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .demo-mec-demo-info {
+      background: #f3f4f6;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #6b7280;
+      text-align: left;
+    }
+    
+    .demo-mec-demo-info h4 {
+      color: #374151;
+      margin: 0 0 0.5rem 0;
+      font-size: 0.9rem;
+    }
+    
+    .demo-mec-demo-info ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    
+    .demo-mec-demo-info li {
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-mec-container">
+    <div class="demo-mec-logo">
+      <i class="fas fa-car"></i>
+    </div>
+    <h2 class="demo-mec-title">MecApp</h2>
+    <p class="demo-mec-subtitle">Sistema de Gestión Automotriz</p>
+    
+    <!-- Menú principal -->
+    <div id="mainMenu">
+      <div class="demo-mec-options">
+        <div class="demo-mec-option" onclick="showIngresarPatente()">
+          <div class="demo-mec-option-icon">
+            <i class="fas fa-plus-circle"></i>
+          </div>
+          <div class="demo-mec-option-title">Ingresar Patente</div>
+          <div class="demo-mec-option-desc">Registrar nuevo vehículo</div>
+        </div>
+        
+        <div class="demo-mec-option" onclick="showConsultarPatente()">
+          <div class="demo-mec-option-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <div class="demo-mec-option-title">Consultar Patente</div>
+          <div class="demo-mec-option-desc">Buscar información</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Formulario Ingresar Patente -->
+    <div id="ingresarForm" style="display: none;">
+      <h3>Ingresar Nueva Patente</h3>
+      <div class="demo-mec-form">
+        <div class="demo-mec-form-group">
+          <label class="demo-mec-label" for="nuevaPatente">Patente</label>
+          <input 
+            type="text" 
+            id="nuevaPatente" 
+            class="demo-mec-input" 
+            placeholder="ABCD12"
+            maxlength="6"
+            style="text-transform: uppercase;"
+          >
+        </div>
+        
+        <div class="demo-mec-form-group">
+          <label class="demo-mec-label" for="marca">Marca</label>
+          <input 
+            type="text" 
+            id="marca" 
+            class="demo-mec-input" 
+            placeholder="Toyota"
+          >
+        </div>
+        
+        <div class="demo-mec-form-group">
+          <label class="demo-mec-label" for="modelo">Modelo</label>
+          <input 
+            type="text" 
+            id="modelo" 
+            class="demo-mec-input" 
+            placeholder="Corolla"
+          >
+        </div>
+        
+        <div class="demo-mec-form-group">
+          <label class="demo-mec-label" for="anio">Año</label>
+          <input 
+            type="number" 
+            id="anio" 
+            class="demo-mec-input" 
+            placeholder="2020"
+            min="1900"
+            max="2030"
+          >
+        </div>
+        
+        <div class="demo-mec-form-group">
+          <label class="demo-mec-label" for="estado">Estado</label>
+          <select id="estado" class="demo-mec-input">
+            <option value="">Seleccionar estado</option>
+            <option value="Disponible">Disponible</option>
+            <option value="Vendido">Vendido</option>
+            <option value="En revisión">En revisión</option>
+            <option value="Reservado">Reservado</option>
+          </select>
+        </div>
+        
+        <button class="demo-mec-btn" onclick="ingresarPatente()" id="btnIngresar">
+          <span class="btn-text">Ingresar Vehículo</span>
+          <span class="btn-loading" style="display: none;">
+            <span class="demo-mec-loading"></span>
+            Guardando...
+          </span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Formulario Consultar Patente -->
+    <div id="consultarForm" style="display: none;">
+      <h3>Consultar Patente</h3>
+      <div class="demo-mec-form">
+        <div class="demo-mec-form-group">
+          <label class="demo-mec-label" for="patenteBuscar">Patente a consultar</label>
+          <input 
+            type="text" 
+            id="patenteBuscar" 
+            class="demo-mec-input" 
+            placeholder="ABCD12"
+            maxlength="6"
+            style="text-transform: uppercase;"
+          >
+        </div>
+        
+        <button class="demo-mec-btn" onclick="consultarPatente()" id="btnConsultar">
+          <span class="btn-text">Buscar Vehículo</span>
+          <span class="btn-loading" style="display: none;">
+            <span class="demo-mec-loading"></span>
+            Buscando...
+          </span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Resultado de consulta -->
+    <div id="resultadoConsulta" style="display: none;"></div>
+    
+    <!-- Botón volver -->
+    <button class="demo-mec-back" onclick="volverMenu()" id="btnVolver" style="display: none;">
+      <i class="fas fa-arrow-left"></i> Volver al menú
+    </button>
+    
+    <div class="demo-mec-demo-info">
+      <h4>💡 Información del demo:</h4>
+      <ul>
+        <li>Base de datos simulada con vehículos de ejemplo</li>
+        <li>Validación de patentes chilenas (formato: ABCD12)</li>
+        <li>Registro y consulta en tiempo real</li>
+        <li>Estados: Disponible, Vendido, En revisión, Reservado</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Base de datos simulada
+    let vehiculos = [
+      {
+        patente: 'ABCD12',
+        marca: 'Toyota',
+        modelo: 'Corolla',
+        anio: 2020,
+        estado: 'Disponible',
+        fechaIngreso: '2024-01-15'
+      },
+      {
+        patente: 'EFGH34',
+        marca: 'Chevrolet',
+        modelo: 'Spark',
+        anio: 2019,
+        estado: 'Vendido',
+        fechaIngreso: '2023-12-10'
+      },
+      {
+        patente: 'IJKL56',
+        marca: 'Ford',
+        modelo: 'Ranger',
+        anio: 2021,
+        estado: 'En revisión',
+        fechaIngreso: '2024-01-20'
+      },
+      {
+        patente: 'MNOP78',
+        marca: 'Hyundai',
+        modelo: 'Tucson',
+        anio: 2022,
+        estado: 'Reservado',
+        fechaIngreso: '2024-01-18'
+      }
+    ];
+
+    function showIngresarPatente() {
+      document.getElementById('mainMenu').style.display = 'none';
+      document.getElementById('ingresarForm').style.display = 'block';
+      document.getElementById('btnVolver').style.display = 'inline-block';
+    }
+
+    function showConsultarPatente() {
+      document.getElementById('mainMenu').style.display = 'none';
+      document.getElementById('consultarForm').style.display = 'block';
+      document.getElementById('btnVolver').style.display = 'inline-block';
+    }
+
+    function volverMenu() {
+      document.getElementById('mainMenu').style.display = 'block';
+      document.getElementById('ingresarForm').style.display = 'none';
+      document.getElementById('consultarForm').style.display = 'none';
+      document.getElementById('resultadoConsulta').style.display = 'none';
+      document.getElementById('btnVolver').style.display = 'none';
+      
+      // Limpiar formularios
+      document.getElementById('nuevaPatente').value = '';
+      document.getElementById('marca').value = '';
+      document.getElementById('modelo').value = '';
+      document.getElementById('anio').value = '';
+      document.getElementById('estado').value = '';
+      document.getElementById('patenteBuscar').value = '';
+    }
+
+    async function ingresarPatente() {
+      const patente = document.getElementById('nuevaPatente').value.toUpperCase().trim();
+      const marca = document.getElementById('marca').value.trim();
+      const modelo = document.getElementById('modelo').value.trim();
+      const anio = document.getElementById('anio').value;
+      const estado = document.getElementById('estado').value;
+      
+      // Validaciones
+      if (!patente || !marca || !modelo || !anio || !estado) {
+        alert('Por favor completa todos los campos');
+        return;
+      }
+      
+      if (!/^[A-Z]{4}\d{2}$/.test(patente)) {
+        alert('Patente inválida. Formato: ABCD12');
+        return;
+      }
+      
+      // Verificar si la patente ya existe
+      if (vehiculos.find(v => v.patente === patente)) {
+        alert('Esta patente ya está registrada');
+        return;
+      }
+      
+      // Mostrar loading
+      const btn = document.getElementById('btnIngresar');
+      const btnText = btn.querySelector('.btn-text');
+      const btnLoading = btn.querySelector('.btn-loading');
+      
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'inline-flex';
+      
+      // Simular delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Agregar vehículo
+      const nuevoVehiculo = {
+        patente,
+        marca,
+        modelo,
+        anio: parseInt(anio),
+        estado,
+        fechaIngreso: new Date().toISOString().split('T')[0]
+      };
+      
+      vehiculos.push(nuevoVehiculo);
+      
+      // Mostrar éxito
+      alert(`Vehículo ${patente} registrado exitosamente`);
+      
+      // Limpiar formulario
+      document.getElementById('nuevaPatente').value = '';
+      document.getElementById('marca').value = '';
+      document.getElementById('modelo').value = '';
+      document.getElementById('anio').value = '';
+      document.getElementById('estado').value = '';
+      
+      // Restaurar botón
+      btn.disabled = false;
+      btnText.style.display = 'inline';
+      btnLoading.style.display = 'none';
+    }
+
+    async function consultarPatente() {
+      const patente = document.getElementById('patenteBuscar').value.toUpperCase().trim();
+      
+      if (!patente) {
+        alert('Por favor ingresa una patente');
+        return;
+      }
+      
+      if (!/^[A-Z]{4}\d{2}$/.test(patente)) {
+        alert('Patente inválida. Formato: ABCD12');
+        return;
+      }
+      
+      // Mostrar loading
+      const btn = document.getElementById('btnConsultar');
+      const btnText = btn.querySelector('.btn-text');
+      const btnLoading = btn.querySelector('.btn-loading');
+      
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'inline-flex';
+      
+      // Simular delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Buscar vehículo
+      const vehiculo = vehiculos.find(v => v.patente === patente);
+      const resultadoDiv = document.getElementById('resultadoConsulta');
+      
+      if (vehiculo) {
+        resultadoDiv.innerHTML = `
+          <div class="demo-mec-result">
+            <h4><i class="fas fa-check-circle"></i> Vehículo encontrado</h4>
+            <p><strong>Patente:</strong> ${vehiculo.patente}</p>
+            <p><strong>Marca:</strong> ${vehiculo.marca}</p>
+            <p><strong>Modelo:</strong> ${vehiculo.modelo}</p>
+            <p><strong>Año:</strong> ${vehiculo.anio}</p>
+            <p><strong>Estado:</strong> ${vehiculo.estado}</p>
+            <p><strong>Fecha de ingreso:</strong> ${vehiculo.fechaIngreso}</p>
+          </div>
+        `;
+      } else {
+        resultadoDiv.innerHTML = `
+          <div class="demo-mec-result error">
+            <h4><i class="fas fa-exclamation-triangle"></i> Vehículo no encontrado</h4>
+            <p>La patente ${patente} no está registrada en el sistema.</p>
+          </div>
+        `;
+      }
+      
+      resultadoDiv.style.display = 'block';
+      
+      // Restaurar botón
+      btn.disabled = false;
+      btnText.style.display = 'inline';
+      btnLoading.style.display = 'none';
+    }
+
+    // Auto-completar patente de ejemplo al hacer doble clic en el input
+    document.getElementById('patenteBuscar').addEventListener('dblclick', function() {
+      this.value = 'ABCD12';
+    });
+  </script>
+</body>
+</html> 

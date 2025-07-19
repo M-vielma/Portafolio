@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Boda</title>
+    <style>
+        /* Fix general para desbordamiento lateral */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ----- Estilos generales ----- */
+        body {
+            background-image: url('./images/flores-bg.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+            background-position: center;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1em;
+        }
+
+        /* ----- Pantalla de Video ----- */
+        .video-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* 🌊 Animación flotante para el video */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .video-box {
+            background-color: #f8f7f2;
+            border-radius: 16px;
+            padding: 2em;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
+            overflow: hidden;
+            margin: 0 auto 1.5em auto;
+            transition: all 0.3s ease;
+            text-align: center;
+            animation: float 1.5s ease-in-out infinite;
+        }
+
+        .logo-invitacion {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        /* ----- Tarjeta Superior (Logo/Monograma) ----- */
+        .logo-card {
+            background-color: #f8f7f2;
+            border-radius: 16px;
+            padding: 2em;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: float 1.5s ease-in-out infinite;
+        }
+
+        .logo-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* ----- Tarjeta Inferior (Formulario) ----- */
+        .form-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2em;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .form-title {
+            color: #624B3E;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 1.5em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8em;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 1.5em;
+            font-family: 'Segoe UI', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #CBC3A6;
+            box-shadow: 0 0 0 2px rgba(203, 195, 166, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .demo-hint {
+            background-color: rgba(203, 195, 166, 0.1);
+            border: 1px solid rgba(203, 195, 166, 0.3);
+            border-radius: 8px;
+            padding: 0.8em;
+            margin-bottom: 1.5em;
+            text-align: center;
+        }
+
+        .demo-hint p {
+            margin: 0;
+            color: #624B3E;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .btn {
+            background-color: #CBC3A6;
+            color: #fff;
+            border: none;
+            padding: 0.8em 1.5em;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: 'Segoe UI', sans-serif;
+            transition: background-color 0.3s ease;
+            margin: 0.5em;
+            min-width: 200px;
+        }
+
+        .btn:hover {
+            background-color: #AD9B72;
+        }
+
+        .btn-location {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5em;
+        }
+
+        .balloon-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #ff6b9d;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* ----- Animaciones ----- */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .oculto {
+            display: none;
+        }
+
+        /* ----- Secciones adicionales ----- */
+        .attendance-section {
+            margin-top: 2em;
+        }
+
+        .attendance-title {
+            color: #624B3E;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 1.5em;
+        }
+
+        .attendance-buttons {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-attendance {
+            padding: 1em 2em;
+            min-width: 120px;
+        }
+
+        .message {
+            padding: 1em;
+            border-radius: 8px;
+            margin: 1em 0;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .message.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 0 1em;
+            }
+
+            .logo-card,
+            .form-card {
+                padding: 1.5em;
+            }
+
+            .logo-image {
+                max-width: 150px;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 0.4em 0;
+            }
+
+            .attendance-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla de Video Inicial -->
+    <div id="pantalla-video" class="video-screen">
+        <!-- Video o logo, parte superior -->
+        <div class="video-box" id="caja-video" onclick="mostrarFormulario()">
+            <video class="logo-invitacion fade-in" autoplay muted playsinline>
+                <source src="./images/vid1.mp4" type="video/mp4">
+                Tu navegador no soporta HTML5 videos.
+            </video>
+        </div>
+    </div>
+
+    <div id="pantalla-formulario" class="main-container oculto">
+        <!-- Tarjeta Superior - Logo/Monograma -->
+        <div class="logo-card">
+            <img src="./images/logo3.png" alt="Logo" class="logo-image">
+        </div>
+
+        <!-- Tarjeta Inferior - Formulario -->
+        <div class="form-card">
+            <!-- Pantalla inicial -->
+            <div id="pantalla-inicial">
+                <h2 class="form-title">Ingresa tu código de invitación</h2>
+                
+                <div class="demo-hint">
+                    <p>💡 <strong>Demo:</strong> Haz doble clic en el campo para auto-completar un código de prueba</p>
+                </div>
+                
+                <input 
+                    type="text" 
+                    id="codigo" 
+                    class="form-input" 
+                    placeholder="Ejemplo: ST220" 
+                    maxlength="10"
+                    style="text-transform: uppercase;"
+                >
+                
+                <button class="btn" onclick="verificarCodigo()">Continuar</button>
+                
+                <a href="https://maps.app.goo.gl/hsadkwgbEnfnR2p49" target="_blank" class="btn btn-location">
+                    
+                    📍Ir a la ceremonia
+                </a>
+            </div>
+
+            <!-- Pantalla de confirmación -->
+            <div id="pantalla-confirmacion" class="oculto">
+                <h2 id="pregunta-titulo" class="form-title">¿Asistirás a la boda?</h2>
+                
+                <div class="attendance-buttons">
+                    <button class="btn btn-attendance" onclick="responder('si')">✅ Sí</button>
+                    <button class="btn btn-attendance" onclick="responder('no')">❌ No</button>
+                </div>
+                
+                <p id="mensaje" class="message oculto"></p>
+            </div>
+
+            <!-- Pantalla de agradecimiento -->
+            <div id="pantalla-agradecimiento" class="oculto">
+                <h2 class="form-title">¡Gracias por confirmar!</h2>
+                <p id="mensaje-agradecimiento">Tu respuesta ha sido registrada exitosamente.</p>
+                
+                <button class="btn" onclick="volverInicio()">Nueva Consulta</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de invitados
+        const invitados = {
+            T100: { nombre: "Teresa Vega", pases: 0 },
+            F110: { nombre: "Freddy Márquez", pases: 0 },
+            I111: { nombre: "Isabel Páez", pases: 0 },
+            F112: { nombre: "Fredy Márquez", pases: 0 },
+            G113: { nombre: "Grimaldo Vega", pases: 0 },
+            C114: { nombre: "Consuelo Vega", pases: 0 },
+            P115: { nombre: "Patricia Garcia", pases: 1 },
+            A116: { nombre: "Alejandra Vega", pases: 0 },
+            S117: { nombre: "Sebastian Rodríguez", pases: 0 },
+            J118: { nombre: "Jesús Vega", pases: 0 },
+            K119: { nombre: "Kristhiann Vivas", pases: 3 },
+            N120: { nombre: "Nicolás Vivas", pases: 2 },
+            P121: { nombre: "Pedro Vivas", pases: 0 },
+            V122: { nombre: "Victoria", pases: 0 },
+            Y123: { nombre: "Yeferson", pases: 0 },
+            C124: { nombre: "Cesar Martinez", pases: 0 },
+            G125: { nombre: "Geraldine Sarratud", pases: 0 },
+            R126: { nombre: "Rodolfo Vega", pases: 0 },
+            SD127: { nombre: "Esther y Diego", pases: 0 },
+        };
+
+        let nombreInvitado = "";
+        let codigoInvitado = "";
+        let pasesAdicionales = 0;
+
+        function verificarCodigo() {
+            const codigo = document.getElementById('codigo').value.trim().toUpperCase();
+            
+            if (!codigo) {
+                mostrarMensaje('Por favor ingresa un código de invitación', 'error');
+                return;
+            }
+            
+            if (invitados[codigo]) {
+                nombreInvitado = invitados[codigo].nombre;
+                pasesAdicionales = invitados[codigo].pases;
+                codigoInvitado = codigo;
+
+                // Ocultar pantalla inicial y mostrar confirmación
+                document.getElementById('pantalla-inicial').classList.add('oculto');
+                document.getElementById('pantalla-confirmacion').classList.remove('oculto');
+                
+                // Actualizar el título con el nombre del invitado
+                document.getElementById('pregunta-titulo').textContent = `Hola ${nombreInvitado}, ¿asistirás a la boda?`;
+                
+                mostrarMensaje('¡Código válido!', 'success');
+            } else {
+                mostrarMensaje('El código que ingresaste no es válido. Por favor revisa tu invitación.', 'error');
+            }
+        }
+
+        function responder(asistira) {
+            let mensajeFinal = "";
+
+            if (asistira === 'si') {
+                if (pasesAdicionales > 0) {
+                    const textoPase = pasesAdicionales === 1
+                        ? "Tienes un pase para 1 acompañante adicional."
+                        : `Tienes un pase para ${pasesAdicionales} acompañantes adicionales.`;
+                    mensajeFinal = `${nombreInvitado}, gracias por confirmar tu asistencia. ¡Estamos emocionados por verte en nuestro gran día! ${textoPase} 💍❤️`;
+                } else {
+                    mensajeFinal = `${nombreInvitado}, gracias por confirmar tu asistencia. ¡Estamos emocionados por verte en nuestro gran día! 💍❤️`;
+                }
+            } else {
+                mensajeFinal = `${nombreInvitado}, gracias por avisarnos. Sentimos que no puedas acompañarnos, pero estarás en nuestros corazones 💍❤️`;
+            }
+
+            // Ocultar pantalla de confirmación y mostrar agradecimiento
+            document.getElementById('pantalla-confirmacion').classList.add('oculto');
+            document.getElementById('pantalla-agradecimiento').classList.remove('oculto');
+            
+            // Actualizar el mensaje de agradecimiento
+            document.getElementById('mensaje-agradecimiento').textContent = mensajeFinal;
+            
+            // Simular envío de confirmación
+            enviarConfirmacion(nombreInvitado, asistira === 'si' ? '✅' : '❌');
+        }
+
+        function enviarConfirmacion(nombre, estado) {
+            // Simulación del envío (en el demo real esto iría al servidor)
+            console.log(`Confirmación enviada: ${nombre} - ${estado}`);
+        }
+
+        function volverInicio() {
+            // Resetear variables
+            nombreInvitado = "";
+            codigoInvitado = "";
+            pasesAdicionales = 0;
+            
+            // Limpiar formulario
+            document.getElementById('codigo').value = '';
+            
+            // Mostrar pantalla inicial
+            document.getElementById('pantalla-agradecimiento').classList.add('oculto');
+            document.getElementById('pantalla-inicial').classList.remove('oculto');
+            
+            ocultarMensaje();
+        }
+
+        function mostrarMensaje(texto, tipo) {
+            const mensajeDiv = document.getElementById('mensaje');
+            mensajeDiv.textContent = texto;
+            mensajeDiv.className = `message ${tipo}`;
+            mensajeDiv.classList.remove('oculto');
+        }
+
+        function ocultarMensaje() {
+            document.getElementById('mensaje').classList.add('oculto');
+        }
+
+        // Permitir Enter para verificar código
+        document.getElementById('codigo').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verificarCodigo();
+            }
+        });
+
+        // Auto-completar códigos de demo al hacer doble clic
+        document.getElementById('codigo').addEventListener('dblclick', function() {
+            // Mostrar lista de códigos disponibles
+            const codigos = Object.keys(invitados);
+            const codigoAleatorio = codigos[Math.floor(Math.random() * codigos.length)];
+            this.value = codigoAleatorio;
+        });
+
+        // Manejo del video inicial
+        const videoScreen = document.getElementById('pantalla-video');
+        const pantallaFormulario = document.getElementById('pantalla-formulario');
+
+        // Función para mostrar el formulario
+        function mostrarFormulario() {
+            videoScreen.classList.add('oculto');
+            pantallaFormulario.classList.remove('oculto');
+        }
+    </script>
+</body>
+</html> 
