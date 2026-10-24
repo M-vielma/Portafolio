@@ -1,4 +1,4 @@
-// miguelvielma.com v4. Sin dependencias ni peticiones externas.
+// miguelvielma.com v4. Sin dependencias; la unica peticion externa es la de metricas propias (Umami, ver abajo).
 // Todo el texto dinamico entra con textContent: nunca innerHTML.
 "use strict";
 
@@ -125,4 +125,45 @@ document.querySelectorAll("[data-ano]").forEach((n) => { n.textContent = String(
   }
 
   reiniciar();
+})();
+
+/* ----------------------------------------------------------- metricas */
+// Umami propio en el servidor de CLAVE (sin cookies ni datos personales). m.js va copiado en el sitio
+// porque el servidor no permite cargarlo desde otro dominio; solo el envio va a clavesoluciones.cl.
+// Solo en el dominio real: en la vista previa local no se carga ni se envia nada.
+(function () {
+  if (location.hostname !== "miguelvielma.com") return;
+  var s = document.createElement("script");
+  s.defer = true;
+  s.src = "assets/js/m.js";
+  s.setAttribute("data-website-id", "5c25fb49-6659-4d0b-9c6b-044b5ae97535");
+  s.setAttribute("data-host-url", "https://clavesoluciones.cl/a");
+  s.setAttribute("data-domains", "miguelvielma.com");
+  document.head.appendChild(s);
+
+  var evento = function (nombre, datos) {
+    if (window.umami && typeof window.umami.track === "function") window.umami.track(nombre, datos);
+  };
+  var corto = function (t) { return (t || "").replace(/\s+/g, " ").trim().slice(0, 60); };
+
+  // Clics en botones y enlaces: WhatsApp, correo, enlaces externos (por ejemplo a CLAVE) y el resto.
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("a, button, summary");
+    if (!el) return;
+    var href = el.getAttribute("href") || "";
+    var tipo = /wa\.me|whatsapp/.test(href) ? "whatsapp" : href.indexOf("mailto:") === 0 ? "correo" :
+      /^https?:/.test(href) && href.indexOf(location.host) < 0 ? "enlace-externo" : "clic";
+    var seccion = el.closest("section[id], section[aria-labelledby], header, footer");
+    evento(tipo, { texto: corto(el.textContent), destino: href.indexOf("mailto:") === 0 ? "correo" : href.split("?")[0].slice(0, 80),
+                   seccion: seccion ? (seccion.id || seccion.getAttribute("aria-labelledby") || seccion.tagName.toLowerCase()) : "" });
+  }, { capture: true });
+
+  // Cuanto bajan en la pagina (25, 50, 75 y 90 %), una vez por umbral.
+  var marcas = [25, 50, 75, 90], vistas = {};
+  addEventListener("scroll", function () {
+    var alto = document.documentElement.scrollHeight - innerHeight;
+    if (alto <= 0) return;
+    var pct = Math.round(scrollY / alto * 100);
+    marcas.forEach(function (m) { if (pct >= m && !vistas[m]) { vistas[m] = true; evento("scroll", { porcentaje: m }); } });
+  }, { passive: true });
 })();
